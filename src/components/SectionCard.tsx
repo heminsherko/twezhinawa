@@ -43,8 +43,8 @@ export default function SectionCard() {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } }
   };
 
   return (
@@ -71,17 +71,23 @@ export default function SectionCard() {
               <motion.div 
                 key={index} 
                 variants={itemVariants}
-                className="group p-6 md:p-10 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#00A8CC]/20 transition-all duration-500 flex flex-col items-start relative overflow-hidden h-full cursor-pointer"
+                className="group p-5 md:p-10 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-1 md:hover:-translate-y-3 hover:shadow-xl md:hover:shadow-2xl active:scale-[0.98] transition-all duration-300 ease-out flex flex-col items-start relative overflow-hidden h-full cursor-pointer"
               >
+                {/* Background Decoration */}
                 <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-[#00A8CC]/5 dark:bg-[#00A8CC]/10 rounded-bl-full pointer-events-none transition-transform duration-500 group-hover:scale-110" />
                 
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#F4F7F6] dark:bg-slate-900/50 flex items-center justify-center border border-slate-200 dark:border-slate-700 group-hover:border-[#00A8CC]/40 group-hover:bg-[#00A8CC]/10 transition-colors mb-5 md:mb-8 relative z-10">
-                  <Icon className="w-7 h-7 md:w-8 md:h-8 text-[#00A8CC]" />
+                {/* Header (Icon + Title) */}
+                <div className="flex items-center gap-3 text-right w-full relative z-10">
+                  <div className="w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-xl md:rounded-2xl bg-[#F4F7F6] dark:bg-slate-900/50 flex items-center justify-center border border-slate-200 dark:border-slate-700 group-hover:border-[#00A8CC]/40 group-hover:bg-[#00A8CC]/10 transition-colors">
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-[#00A8CC]" />
+                  </div>
+                  <h3 className="text-lg md:text-2xl font-bold text-[#0A2540] dark:text-white group-hover:text-[#00A8CC] dark:group-hover:text-[#00A8CC] transition-colors leading-tight">
+                    {card.title}
+                  </h3>
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-[#0A2540] dark:text-white group-hover:text-[#00A8CC] dark:group-hover:text-[#00A8CC] transition-colors relative z-10 leading-tight">
-                  {card.title}
-                </h3>
-                <p className="text-sm md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed md:leading-relaxed font-medium relative z-10">
+
+                {/* Description */}
+                <p className="w-full mt-3 md:mt-5 text-sm md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed md:leading-relaxed text-right relative z-10 font-medium">
                   {card.description}
                 </p>
               </motion.div>
