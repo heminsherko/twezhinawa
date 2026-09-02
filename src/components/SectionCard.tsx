@@ -48,17 +48,17 @@ export default function SectionCard() {
   };
 
   return (
-    <section id="features" className="py-28 relative">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0A2540] dark:text-white inline-block">
+    <section id="features" className="py-12 md:py-28 relative">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 text-[#0A2540] dark:text-white inline-block">
             خزمەتگوزارییە ئەکادیمییەکان
           </h2>
-          <div className="w-32 h-1.5 bg-[#00A8CC] mx-auto rounded-full mt-4 shadow-[0_0_10px_rgba(0,168,204,0.5)]"></div>
+          <div className="w-24 md:w-32 h-1.5 bg-[#00A8CC] mx-auto rounded-full mt-4 shadow-[0_0_10px_rgba(0,168,204,0.5)]"></div>
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-10 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 md:gap-10 max-w-5xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -71,17 +71,17 @@ export default function SectionCard() {
               <motion.div 
                 key={index} 
                 variants={itemVariants}
-                className="group p-10 rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#00A8CC]/20 transition-all duration-500 flex flex-col items-start relative overflow-hidden h-full cursor-pointer"
+                className="group p-6 md:p-10 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-3 hover:shadow-2xl hover:shadow-[#00A8CC]/20 transition-all duration-500 flex flex-col items-start relative overflow-hidden h-full cursor-pointer"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#00A8CC]/5 dark:bg-[#00A8CC]/10 rounded-bl-full pointer-events-none transition-transform duration-500 group-hover:scale-110" />
+                <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-[#00A8CC]/5 dark:bg-[#00A8CC]/10 rounded-bl-full pointer-events-none transition-transform duration-500 group-hover:scale-110" />
                 
-                <div className="w-16 h-16 rounded-2xl bg-[#F4F7F6] dark:bg-slate-900/50 flex items-center justify-center border border-slate-200 dark:border-slate-700 group-hover:border-[#00A8CC]/40 group-hover:bg-[#00A8CC]/10 transition-colors mb-8 relative z-10">
-                  <Icon className="w-8 h-8 text-[#00A8CC]" />
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#F4F7F6] dark:bg-slate-900/50 flex items-center justify-center border border-slate-200 dark:border-slate-700 group-hover:border-[#00A8CC]/40 group-hover:bg-[#00A8CC]/10 transition-colors mb-5 md:mb-8 relative z-10">
+                  <Icon className="w-7 h-7 md:w-8 md:h-8 text-[#00A8CC]" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-[#0A2540] dark:text-white group-hover:text-[#00A8CC] dark:group-hover:text-[#00A8CC] transition-colors relative z-10">
+                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-[#0A2540] dark:text-white group-hover:text-[#00A8CC] dark:group-hover:text-[#00A8CC] transition-colors relative z-10 leading-tight">
                   {card.title}
                 </h3>
-                <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium relative z-10">
+                <p className="text-sm md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed md:leading-relaxed font-medium relative z-10">
                   {card.description}
                 </p>
               </motion.div>

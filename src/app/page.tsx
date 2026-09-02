@@ -6,7 +6,7 @@ import SourceFinder from "@/components/SourceFinder";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-16 md:gap-24 pb-20 pt-4">
+    <div className="flex flex-col gap-10 md:gap-24 pb-12 md:pb-20 pt-2 md:pt-4 w-full overflow-hidden">
       
       {/* بەشی پێشوازی و ناساندن */}
       <Hero />
@@ -15,7 +15,7 @@ export default function HomePage() {
       <SectionCard />
       
       {/* بەشی ئامرازەکان */}
-      <div className="max-w-5xl mx-auto px-4 w-full">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full">
         <SourceFinder />
       </div>
 

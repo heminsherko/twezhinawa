@@ -12,15 +12,15 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-white dark:bg-[#020617] border-t border-[#E2E8F0] dark:border-[#1E293B] pt-16 pb-8 transition-colors">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <footer className="bg-white dark:bg-[#020617] border-t border-[#E2E8F0] dark:border-[#1E293B] pt-12 md:pt-16 pb-6 md:pb-8 transition-colors">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-10 md:mb-12">
             
             <div className="lg:col-span-2">
               <Link href="/" className="inline-block mb-6">
                 <Logo />
               </Link>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium mb-6 max-w-md transition-colors">
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed md:leading-relaxed font-medium mb-6 max-w-md transition-colors">
                 پلاتفۆرمی پێشەنگ لە کوردستان بۆ هاوکاریکردنی توێژەران و خوێندکارانی ماستەر و دکتۆرا لە هەموو قۆناغەکانی توێژینەوەدا، لە بیرۆکەوە تا بڵاوکردنەوە.
               </p>
               <div className="flex items-center gap-4">
@@ -34,14 +34,14 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-[#0A2540] dark:text-white mb-6 transition-colors">دەربارەی ئێمە</h4>
-              <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed text-sm">
+              <h4 className="text-base md:text-lg font-bold text-[#0A2540] dark:text-white mb-4 md:mb-6 transition-colors">دەربارەی ئێمە</h4>
+              <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed md:leading-relaxed text-sm">
                 ئێمە تیمێکی شارەزای ڕێنمایی و نوسینەوەی توێژینەوەی زانستیین لە هەموو بوارەکاندا کارمەندی خاوەن بڕوانامەی بەرز و بە ئەزموونمان هەیە، تیمەکەمان زیاتر لە ١٠ ساڵ ئەزموونی هەیە لەکاری ڕێنمایی و نووسینەوەی توێژینەوەی زانستی دا، ئەگەر پێویستت بە یارمەتی ئێمە هەبوو، <button onClick={() => setShowContactModal(true)} className="text-[#00A8CC] hover:underline font-medium">پەیوەندیمان پێوە بکە</button>
               </p>
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-[#0A2540] dark:text-white mb-6 transition-colors">پەیوەندی</h4>
+              <h4 className="text-base md:text-lg font-bold text-[#0A2540] dark:text-white mb-4 md:mb-6 transition-colors">پەیوەندی</h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-[#00A8CC] shrink-0 mt-0.5" />

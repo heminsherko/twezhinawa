@@ -31,8 +31,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 backdrop-blur-2xl bg-white/70 dark:bg-[#020617]/70 border-b border-slate-200/50 dark:border-[#00A8CC]/20 transition-colors duration-300">
-        <div className="container mx-auto px-4 py-4 md:py-6 flex items-center justify-between">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-100 dark:border-slate-800 transition-colors duration-300">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-5 py-3 md:py-4 flex items-center justify-between">
           
           {/* Logo (Right in RTL) */}
           <Link href="/">
