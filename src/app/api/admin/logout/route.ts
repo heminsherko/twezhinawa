@@ -5,9 +5,9 @@ export async function POST() {
   
   // Clear the cookie
   response.cookies.set({
-    name: "admin-token",
+    name: "admin_auth",
     value: "",
-    httpOnly: true,
+    httpOnly: false, // matches client side
     expires: new Date(0),
     path: "/",
   });

@@ -11,8 +11,18 @@ export default function AdminDashboard() {
     submissions: 0,
     visitors: "٢,٤٥٠",
   });
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
+    const hasLocalAuth = localStorage.getItem("admin_auth") === "true";
+    const hasCookieAuth = document.cookie.includes("admin_auth=true");
+
+    if (!hasLocalAuth && !hasCookieAuth) {
+      window.location.href = "/admin/login";
+      return;
+    }
+    setIsAuthorized(true);
+
     const articles = JSON.parse(localStorage.getItem("admin_articles") || "[]");
     const submissions = JSON.parse(localStorage.getItem("admin_submissions") || "[]");
     setStatsData({
@@ -21,6 +31,8 @@ export default function AdminDashboard() {
       visitors: "٢,٤٥٠"
     });
   }, []);
+
+  if (!isAuthorized) return null;
 
   const stats = [
     { title: "کۆی سەردانکەران", value: statsData.visitors, icon: Users, color: "text-blue-500", bg: "bg-blue-500/10" },

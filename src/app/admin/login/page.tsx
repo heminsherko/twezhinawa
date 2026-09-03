@@ -14,13 +14,13 @@ export default function AdminLogin() {
     setLoading(true);
     setError("");
 
-    if (password === "Twezhinawa2026" || password === "twezhinawa2026") {
+    if (password.trim() === "Twezhinawa2026" || password.trim() === "twezhinawa2026") {
       localStorage.setItem("admin_auth", "true");
-      document.cookie = "admin_auth=true; path=/; max-age=86400;";
-      router.push("/admin");
+      document.cookie = "admin_auth=true; path=/; max-age=86400; SameSite=Lax";
+      window.location.href = "/admin";
     } else {
-      setError("وشەی نهێنی هەڵەیە! تکایە وشەی ڕاست بنووسە.");
       setLoading(false);
+      setError("وشەی نهێنی هەڵەیە! تکایە وشەی ڕاست بنووسە.");
     }
   };
 
