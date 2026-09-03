@@ -268,3 +268,4 @@ export default function ResearchGuideModal({ isOpen, onClose, activeGuideId }: R
     </div>
   );
 }
+
