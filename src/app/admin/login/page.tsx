@@ -2,69 +2,73 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, Loader2, Eye, EyeOff } from "lucide-react";
 
-export default function LoginPage() {
+export default function AdminLogin() {
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-
-      if (res.ok) {
-        router.push("/admin");
-        router.refresh();
-      } else {
-        const data = await res.json();
-        setError(data.error || "وشەی نهێنی هەڵەیە! تکایە دووبارە هەوڵبدەرەوە.");
-      }
-      setError("هێڵی ئینتەرنێتەکەت بپشکنە");
-    } finally {
+    if (password === "Twezhinawa2026" || password === "twezhinawa2026") {
+      localStorage.setItem("admin_auth", "true");
+      document.cookie = "admin_auth=true; path=/; max-age=86400;";
+      router.push("/admin");
+    } else {
+      setError("وشەی نهێنی هەڵەیە! تکایە وشەی ڕاست بنووسە.");
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col justify-center items-center p-4" dir="rtl">
-      <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8">
-        <div className="flex justify-center mb-8">
-          <Logo />
-        </div>
-        
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 font-sans" dir="rtl">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-[#0A2540] dark:text-white mb-2">چوونەژوورەوەی بەڕێوەبەر</h1>
-          <p className="text-slate-500 dark:text-slate-400">وشەی تێپەڕ بنووسە بۆ چوونە ناو پانێڵ</p>
+          <div className="w-16 h-16 bg-[#00A8CC]/10 text-[#00A8CC] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-[#0A2540] dark:text-white">
+            چوونەژوورەوەی بەڕێوەبەر
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">
+            تکایە وشەی نهێنی بنووسە بۆ دەستگەیشتن بە داشبۆرد
+          </p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <div className="relative flex items-center">
-              <Lock className="w-5 h-5 text-slate-400 absolute right-4 pointer-events-none" />
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="وشەی تێپەڕ..."
-                required
-              />
-              <button 
-                type="button" 
-                className="absolute left-4 p-1 text-slate-400 hover:text-[#00A8CC] transition-colors outline-none"
-              >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              وشەی نهێنی (پاسۆرد)
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••••••"
+              required
+              className="w-full px-4 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#00A8CC] transition-all text-left"
+              dir="ltr"
+            />
+          </div>
+
+          <button
+            type="submit"
             disabled={loading}
-            className="w-full bg-[#00A8CC] hover:bg-[#008BA8] text-white py-4 rounded-xl font-bold text-lg transition-all flex justify-center items-center disabled:opacity-70"
+            className="w-full bg-[#00A8CC] hover:bg-[#008BA8] text-white py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#00A8CC]/20"
           >
-            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "چوونەژوورەوە"}
+            {loading ? "چاوەڕێ بکە..." : "چوونەژوورەوە"}
           </button>
         </form>
       </div>
