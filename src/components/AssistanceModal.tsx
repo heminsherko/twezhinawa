@@ -1,55 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { X, PhoneCall, MessageCircle, Send } from "lucide-react";
 
 interface AssistanceModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// Editable constants
+const PHONE_NUMBER = "+9647732640262";
+const VIBER_NUMBER = "%2B9647732640262";
+const TELEGRAM_HANDLE = "twezhinawa"; // as requested
+
+const WHATSAPP_URL = `https://wa.me/9647732640262?text=${encodeURIComponent("سڵاو، پێویستم بە یارمەتییە لە توێژینەوەی زانستی")}`;
+const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
+const VIBER_URL = `viber://chat?number=${VIBER_NUMBER}`;
+
 export default function AssistanceModal({ isOpen, onClose }: AssistanceModalProps) {
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    topic: "",
-    details: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate API call and save to localStorage
-    setTimeout(() => {
-      const existing = JSON.parse(localStorage.getItem("admin_submissions") || "[]");
-      const newSubmission = {
-        id: Date.now().toString(),
-        name: formData.name,
-        contact: formData.contact,
-        topic: formData.topic,
-        details: formData.details, // optional detail field for now, though dashboard doesn't show it yet
-        date: new Date().toISOString().split("T")[0],
-        status: "new",
-      };
-      
-      localStorage.setItem("admin_submissions", JSON.stringify([newSubmission, ...existing]));
-      
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      
-      // Close modal after showing success message
-      setTimeout(() => {
-        setIsSuccess(false);
-        setFormData({ name: "", contact: "", topic: "", details: "" });
-        onClose();
-      }, 3000);
-    }, 1000);
-  };
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -62,7 +30,7 @@ export default function AssistanceModal({ isOpen, onClose }: AssistanceModalProp
           >
             {/* Header */}
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
-              <h2 className="text-xl font-bold text-[#0A2540] dark:text-white">پێویستت بە یارمەتییە؟</h2>
+              <h2 className="text-xl font-bold text-[#0A2540] dark:text-white">پەیوەندیمان پێوە بکە</h2>
               <button onClick={onClose} className="p-2 text-slate-400 hover:text-red-500 bg-white dark:bg-slate-800 rounded-full shadow-sm transition-colors">
                 <X className="w-5 h-5" />
               </button>
@@ -70,54 +38,71 @@ export default function AssistanceModal({ isOpen, onClose }: AssistanceModalProp
 
             {/* Body */}
             <div className="p-6">
-              {isSuccess ? (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
-                  className="flex flex-col items-center justify-center py-10 text-center"
+              <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+                بۆ هەر پرسیار، ڕاوێژ و هاوکارییەکی زانستی، ڕاستەوخۆ لە ڕێگەی ئەم تۆڕانەوە پەیوەندیمان پێوە بکە:
+              </p>
+              
+              <div className="space-y-4">
+                {/* WhatsApp */}
+                <motion.a 
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-4 w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/20 transition-all group cursor-pointer"
                 >
-                  <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 className="w-10 h-10 text-green-500" />
+                  <div className="w-14 h-14 rounded-full bg-[#25D366]/10 text-[#25D366] flex items-center justify-center group-hover:bg-[#25D366] group-hover:text-white transition-colors shrink-0">
+                    <MessageCircle className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#0A2540] dark:text-white mb-2">سەرکەوتوو بوو!</h3>
-                  <p className="text-slate-500 dark:text-slate-400">داواکارییەکەت بە سەرکەوتوویی نێردرا! لە نزیکترین کاتدا پەیوەندیت پێوە دەکەین.</p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
-                    فۆڕمەکە پڕبکەرەوە و ئێمە پەیوەندیت پێوە دەکەین بۆ هاوکاری لە توێژینەوەکەت.
-                  </p>
-                  
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ناوی تەواو</label>
-                    <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-[#00A8CC] transition-colors" placeholder="ناوی سێیانی..." />
+                    <h3 className="font-bold text-[#0A2540] dark:text-white mb-1 group-hover:text-[#25D366] transition-colors">واتسئەپ (WhatsApp)</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">نامە بنێرە بۆ وەڵامدانەوەی خێرا</p>
                   </div>
+                </motion.a>
 
+                {/* Telegram */}
+                <motion.a 
+                  href={TELEGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-4 w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-[#229ED9] hover:shadow-lg hover:shadow-[#229ED9]/20 transition-all group cursor-pointer"
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#229ED9]/10 text-[#229ED9] flex items-center justify-center group-hover:bg-[#229ED9] group-hover:text-white transition-colors shrink-0">
+                    <Send className="w-7 h-7" />
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ژمارەی تەلەفۆن یان ئیمەیڵ</label>
-                    <input required type="text" value={formData.contact} onChange={e => setFormData({...formData, contact: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-[#00A8CC] transition-colors text-left" dir="ltr" placeholder="0750 XXX XXXX" />
+                    <h3 className="font-bold text-[#0A2540] dark:text-white mb-1 group-hover:text-[#229ED9] transition-colors">تێلیگرام (Telegram)</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">پەیوەندی لە تێلیگرامەوە</p>
                   </div>
+                </motion.a>
 
+                {/* Viber */}
+                <motion.a 
+                  href={VIBER_URL}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-4 w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-[#7360F2] hover:shadow-lg hover:shadow-[#7360F2]/20 transition-all group cursor-pointer"
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#7360F2]/10 text-[#7360F2] flex items-center justify-center group-hover:bg-[#7360F2] group-hover:text-white transition-colors shrink-0">
+                    <PhoneCall className="w-7 h-7" />
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">جۆری توێژینەوە / بابەت</label>
-                    <input required type="text" value={formData.topic} onChange={e => setFormData({...formData, topic: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-[#00A8CC] transition-colors" placeholder="بۆ نموونە: ماستەرنامە..." />
+                    <h3 className="font-bold text-[#0A2540] dark:text-white mb-1 group-hover:text-[#7360F2] transition-colors">ڤایبەر (Viber)</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">پەیوەندی لە ڕێگەی ڤایبەرەوە</p>
                   </div>
+                </motion.a>
 
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">زانیاری زیاتر (ئارەزوومەندانە)</label>
-                    <textarea rows={3} value={formData.details} onChange={e => setFormData({...formData, details: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-[#00A8CC] resize-none transition-colors" placeholder="هەر تێبینییەکت هەیە بینووسە..." />
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full bg-[#00A8CC] hover:bg-[#008BA8] text-white py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#00A8CC]/20 disabled:opacity-70 mt-2"
-                  >
-                    {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
-                    {isSubmitting ? "لە ناردندایە..." : "ناردنی داواکاری"}
-                  </button>
-                </form>
-              )}
+                {/* Direct Phone Call */}
+                <div className="pt-4 mt-2 border-t border-slate-200 dark:border-slate-800 text-center">
+                  <a href={`tel:${PHONE_NUMBER}`} className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-[#00A8CC] dark:text-slate-400 dark:hover:text-[#00A8CC] transition-colors bg-slate-50 dark:bg-slate-800/50 px-4 py-2 rounded-full">
+                    <PhoneCall className="w-4 h-4" />
+                    <span dir="ltr">{PHONE_NUMBER}</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
