@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BookOpen, Library, Globe, BarChart3, FileText, UserPlus } from "lucide-react";
+import AssistanceModal from "./AssistanceModal";
 
 const cards = [
   {
@@ -15,23 +17,25 @@ const cards = [
     title: "دۆزینەوەی سەرچاوەی زانستی",
     description: "دۆزینەوەی باشترین پەرتووک و توێژینەوەی ئەکادیمی بە زمانەکانی کوردی، عەرەبی و ئینگلیزی بە سەدا سەد بێبەرامبەر.",
     icon: Library,
-    href: "/#sources"
+    href: "/#source-finder"
   },
-
   {
     title: "بڵاوکردنەوە لە گۆڤارەکان",
     description: "ناساندنی گۆڤارەکانی Scopus و Clarivate و ڕێنمایی بۆ خۆدوورگرتن لە گۆڤارە ساختەکان.",
     icon: Globe,
+    href: "/journals"
   },
   {
     title: "ڕاوێژکاری تایبەتی",
     description: "دابینکردنی ڕاوێژی یەک-بۆ-یەک بۆ پێداچوونەوە و ڕاستکردنەوەی توێژینەوەکانت.",
     icon: UserPlus,
-    href: "/consultation"
+    action: "consultation"
   }
 ];
 
 export default function SectionCard() {
+  const [showAssistanceModal, setShowAssistanceModal] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -71,7 +75,7 @@ export default function SectionCard() {
               <motion.div 
                 key={index} 
                 variants={itemVariants}
-                className="group p-5 md:p-10 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-1 md:hover:-translate-y-3 hover:shadow-xl md:hover:shadow-2xl active:scale-[0.98] transition-all duration-300 ease-out flex flex-col items-start relative overflow-hidden h-full cursor-pointer"
+                className="group p-5 md:p-10 rounded-2xl md:rounded-3xl bg-white/80 dark:bg-[#0f172a]/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 hover:border-[#00A8CC]/50 hover:-translate-y-1 md:hover:-translate-y-3 hover:shadow-xl md:hover:shadow-2xl active:scale-[0.98] transition-all duration-300 ease-out flex flex-col items-start relative overflow-hidden h-full cursor-pointer text-right"
               >
                 {/* Background Decoration */}
                 <div className="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-[#00A8CC]/5 dark:bg-[#00A8CC]/10 rounded-bl-full pointer-events-none transition-transform duration-500 group-hover:scale-110" />
@@ -101,10 +105,23 @@ export default function SectionCard() {
               );
             }
 
+            if (card.action === "consultation") {
+              return (
+                <button key={index} className="block h-full w-full text-right" onClick={() => setShowAssistanceModal(true)}>
+                  {cardContent}
+                </button>
+              );
+            }
+
             return cardContent;
           })}
         </motion.div>
       </div>
+      
+      <AssistanceModal 
+        isOpen={showAssistanceModal} 
+        onClose={() => setShowAssistanceModal(false)} 
+      />
     </section>
   );
 }
