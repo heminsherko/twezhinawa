@@ -5,25 +5,26 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { BookOpen, Library, Globe, BarChart3, FileText, UserPlus } from "lucide-react";
 import AssistanceModal from "./AssistanceModal";
+import ResearchGuideModal from "./ResearchGuideModal";
 
 const cards = [
   {
     title: "چۆن توێژینەوەکەم دروست بکەم؟",
     description: "فێرکاری قۆناغ بە قۆناغی نووسینی پێشەکی، کورتە، دیاریکردنی کێشەی توێژینەوە و هەڵبژاردنی میتۆدی گونجاو.",
     icon: BookOpen,
-    href: "/create-research"
+    guideId: "create-research"
   },
   {
     title: "دۆزینەوەی سەرچاوەی زانستی",
     description: "دۆزینەوەی باشترین پەرتووک و توێژینەوەی ئەکادیمی بە زمانەکانی کوردی، عەرەبی و ئینگلیزی بە سەدا سەد بێبەرامبەر.",
     icon: Library,
-    href: "/#source-finder"
+    guideId: "find-sources"
   },
   {
     title: "بڵاوکردنەوە لە گۆڤارەکان",
     description: "ناساندنی گۆڤارەکانی Scopus و Clarivate و ڕێنمایی بۆ خۆدوورگرتن لە گۆڤارە ساختەکان.",
     icon: Globe,
-    href: "/journals"
+    guideId: "international-journals"
   },
   {
     title: "ڕاوێژکاری تایبەتی",
@@ -35,6 +36,7 @@ const cards = [
 
 export default function SectionCard() {
   const [showAssistanceModal, setShowAssistanceModal] = useState(false);
+  const [activeGuide, setActiveGuide] = useState<string | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -97,11 +99,11 @@ export default function SectionCard() {
               </motion.div>
             );
 
-            if (card.href) {
+            if (card.guideId) {
               return (
-                <Link href={card.href} key={index} className="block h-full">
+                <button key={index} className="block h-full w-full text-right" onClick={() => setActiveGuide(card.guideId)}>
                   {cardContent}
-                </Link>
+                </button>
               );
             }
 
@@ -121,6 +123,11 @@ export default function SectionCard() {
       <AssistanceModal 
         isOpen={showAssistanceModal} 
         onClose={() => setShowAssistanceModal(false)} 
+      />
+      <ResearchGuideModal 
+        isOpen={!!activeGuide} 
+        onClose={() => setActiveGuide(null)} 
+        activeGuideId={activeGuide || ""}
       />
     </section>
   );

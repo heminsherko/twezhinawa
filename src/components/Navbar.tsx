@@ -6,31 +6,22 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
-import LevelSelectionModal from "./LevelSelectionModal";
+import ResearchGuideModal from "./ResearchGuideModal";
 import AssistanceModal from "./AssistanceModal";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showLevelModal, setShowLevelModal] = useState(false);
+  const [activeGuide, setActiveGuide] = useState<string | null>(null);
   const [showAssistanceModal, setShowAssistanceModal] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   if (pathname?.startsWith("/admin")) return null;
 
   useEffect(() => {
-    // Check initial theme from document class
     if (document.documentElement.classList.contains("dark")) {
       setTheme("dark");
     }
-
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleTheme = () => {
@@ -44,6 +35,11 @@ export default function Navbar() {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
+  };
+
+  const openGuide = (guideId: string) => {
+    setIsMobileMenuOpen(false);
+    setActiveGuide(guideId);
   };
 
   return (
@@ -60,15 +56,15 @@ export default function Navbar() {
           
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-10">
-            <button onClick={() => setShowLevelModal(true)} className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
+            <button onClick={() => openGuide("create-research")} className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               چۆن توێژینەوەکەم دروست بکەم؟
             </button>
-            <Link href="/#source-finder" className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
+            <button onClick={() => openGuide("find-sources")} className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               دۆزینەوەی سەرچاوەی زانستی
-            </Link>
-            <Link href="/journals" className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
+            </button>
+            <button onClick={() => openGuide("international-journals")} className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               گۆڤارە نێودەوڵەتییەکان
-            </Link>
+            </button>
           </nav>
 
           {/* Action Buttons & Mobile Toggle */}
@@ -117,29 +113,27 @@ export default function Navbar() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden overflow-hidden bg-white/95 dark:bg-[#020617]/95 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800"
+              className="md:hidden overflow-hidden bg-white/95 dark:bg-[#020617]/95 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800 absolute top-full left-0 w-full"
             >
               <div className="container mx-auto px-4 py-6 flex flex-col gap-6">
                 <button 
-                  onClick={() => { setIsMobileMenuOpen(false); setShowLevelModal(true); }} 
+                  onClick={() => openGuide("create-research")} 
                   className="text-right text-lg font-medium text-[#0A2540] dark:text-white"
                 >
                   چۆن توێژینەوەکەم دروست بکەم؟
                 </button>
-                <Link 
-                  href="/#source-finder" 
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button 
+                  onClick={() => openGuide("find-sources")}
                   className="text-right text-lg font-medium text-[#0A2540] dark:text-white"
                 >
                   دۆزینەوەی سەرچاوەی زانستی
-                </Link>
-                <Link 
-                  href="/journals" 
-                  onClick={() => setIsMobileMenuOpen(false)}
+                </button>
+                <button 
+                  onClick={() => openGuide("international-journals")}
                   className="text-right text-lg font-medium text-[#0A2540] dark:text-white"
                 >
                   گۆڤارە نێودەوڵەتییەکان
-                </Link>
+                </button>
                 <button 
                   onClick={() => { setIsMobileMenuOpen(false); setShowAssistanceModal(true); }}
                   className="w-full mt-4 px-6 py-4 text-center text-lg font-medium bg-[#00A8CC] text-white rounded-xl"
@@ -152,9 +146,10 @@ export default function Navbar() {
         </AnimatePresence>
       </header>
 
-      <LevelSelectionModal 
-        isOpen={showLevelModal} 
-        onClose={() => setShowLevelModal(false)} 
+      <ResearchGuideModal 
+        isOpen={!!activeGuide} 
+        onClose={() => setActiveGuide(null)} 
+        activeGuideId={activeGuide || ""}
       />
       <AssistanceModal 
         isOpen={showAssistanceModal} 

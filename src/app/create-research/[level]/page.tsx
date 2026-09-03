@@ -122,7 +122,7 @@ export default function ResearchWizard() {
                 </button>
 
                 <button onClick={() => { setLevel("دکتۆرا"); setStep(2); }} className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 p-8 rounded-3xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-[0_10px_30px_-10px_rgba(0,168,204,0.4)] transition-all flex flex-col items-center gap-4 group">
-                  <div className="bg-[#00A8CC]/10 p-4 rounded-2xl text-[#00A8CC] group-hover:scale-110 transition-transform"><Library className="w-10 h-10" /></div>
+                  <div className="bg-[#00A8CC]/10 p-4 rounded-2xl text-[#00A8CC] group-hover:scale-110 transition-transform"><LibraryIcon className="w-10 h-10" /></div>
                   <span className="text-xl font-normal">دکتۆرا</span>
                 </button>
 
