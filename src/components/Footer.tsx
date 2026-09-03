@@ -6,9 +6,14 @@ import Logo from "./Logo";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
   const [showContactModal, setShowContactModal] = useState(false);
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <>

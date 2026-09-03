@@ -31,9 +31,9 @@ export default function AdminDashboard() {
 
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#0A2540] dark:text-white mb-2">بەخێربێیت، بەڕێوەبەر 👋</h1>
-        <p className="text-slate-500 dark:text-slate-400">لێرەوە دەتوانیت سەرجەم بەشەکانی ماڵپەڕەکە بەڕێوەبەریت و ئامارەکان ببینیت.</p>
+      <div className="mb-10 pt-2">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#0A2540] dark:text-white mb-3 leading-relaxed">بەخێربێیت، بەڕێوەبەر 👋</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed">لێرەوە دەتوانیت سەرجەم بەشەکانی ماڵپەڕەکە بەڕێوەبەریت و ئامارەکان ببینیت.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

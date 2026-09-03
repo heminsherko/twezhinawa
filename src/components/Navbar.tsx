@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -9,11 +10,14 @@ import LevelSelectionModal from "./LevelSelectionModal";
 import AssistanceModal from "./AssistanceModal";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLevelModal, setShowLevelModal] = useState(false);
   const [showAssistanceModal, setShowAssistanceModal] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  if (pathname?.startsWith("/admin")) return null;
 
   useEffect(() => {
     // Check initial theme from document class

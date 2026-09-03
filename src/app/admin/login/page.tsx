@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, Loader2 } from "lucide-react";
+import { Lock, Loader2, Eye, EyeOff } from "lucide-react";
 import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -28,7 +29,7 @@ export default function LoginPage() {
         router.refresh();
       } else {
         const data = await res.json();
-        setError(data.error || "هەڵەیەک ڕوویدا");
+        setError(data.error || "وشەی نهێنی هەڵەیە! تکایە دووبارە هەوڵبدەرەوە.");
       }
     } catch (err) {
       setError("هێڵی ئینتەرنێتەکەت بپشکنە");
@@ -51,16 +52,23 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <div className="relative">
+            <div className="relative flex items-center">
+              <Lock className="w-5 h-5 text-slate-400 absolute right-4 pointer-events-none" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="وشەی تێپەڕ..."
-                className="w-full pl-4 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-[#00A8CC] outline-none transition-all text-slate-700 dark:text-white"
+                className="w-full pl-12 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-[#00A8CC] outline-none transition-all text-slate-700 dark:text-white"
                 required
               />
-              <Lock className="w-5 h-5 text-slate-400 absolute top-1/2 -translate-y-1/2 right-4" />
+              <button 
+                type="button" 
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute left-4 p-1 text-slate-400 hover:text-[#00A8CC] transition-colors outline-none"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
             </div>
             {error && <p className="text-red-500 text-sm mt-2 font-medium">{error}</p>}
           </div>
