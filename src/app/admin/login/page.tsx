@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, Loader2, Eye, EyeOff } from "lucide-react";
-import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -31,7 +29,6 @@ export default function LoginPage() {
         const data = await res.json();
         setError(data.error || "وشەی نهێنی هەڵەیە! تکایە دووبارە هەوڵبدەرەوە.");
       }
-    } catch (err) {
       setError("هێڵی ئینتەرنێتەکەت بپشکنە");
     } finally {
       setLoading(false);
@@ -55,26 +52,15 @@ export default function LoginPage() {
             <div className="relative flex items-center">
               <Lock className="w-5 h-5 text-slate-400 absolute right-4 pointer-events-none" />
               <input
-                type={showPassword ? "text" : "password"}
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="وشەی تێپەڕ..."
-                className="w-full pl-12 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-[#00A8CC] outline-none transition-all text-slate-700 dark:text-white"
                 required
               />
               <button 
                 type="button" 
-                onClick={() => setShowPassword(!showPassword)}
                 className="absolute left-4 p-1 text-slate-400 hover:text-[#00A8CC] transition-colors outline-none"
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-            </div>
-            {error && <p className="text-red-500 text-sm mt-2 font-medium">{error}</p>}
-          </div>
-
-          <button
-            type="submit"
             disabled={loading}
             className="w-full bg-[#00A8CC] hover:bg-[#008BA8] text-white py-4 rounded-xl font-bold text-lg transition-all flex justify-center items-center disabled:opacity-70"
           >
