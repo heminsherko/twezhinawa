@@ -106,7 +106,7 @@ export default function Footer() {
                   <span className="font-medium text-slate-700 dark:text-slate-200">WhatsApp</span>
                 </a>
 
-                <a href="https://t.me/hemin.sherko" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 w-full p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-all group">
+                <a href="https://t.me/heminsherko" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 w-full p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 transition-all group">
                   <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Send className="w-5 h-5" />
                   </div>

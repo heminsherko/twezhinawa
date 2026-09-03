@@ -240,7 +240,7 @@ export default function ResearchWizard() {
                     <span className="text-lg">واتسئاپ</span>
                   </a>
                   {/* Telegram */}
-                  <a href="https://t.me/hemin.sherko" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 p-6 rounded-2xl flex flex-col items-center gap-3 hover:-translate-y-2 hover:border-[#0088cc] hover:shadow-[0_10px_20px_-10px_rgba(0,136,204,0.4)] transition-all shadow-sm text-[#0A2540] dark:text-white">
+                  <a href="https://t.me/heminsherko" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 p-6 rounded-2xl flex flex-col items-center gap-3 hover:-translate-y-2 hover:border-[#0088cc] hover:shadow-[0_10px_20px_-10px_rgba(0,136,204,0.4)] transition-all shadow-sm text-[#0A2540] dark:text-white">
                     <Send className="w-10 h-10 text-[#0088cc]" />
                     <span className="text-lg">تێلگرام</span>
                   </a>

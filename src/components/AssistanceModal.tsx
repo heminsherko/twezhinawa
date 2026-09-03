@@ -11,7 +11,7 @@ interface AssistanceModalProps {
 // Editable constants
 const PHONE_NUMBER = "+9647732640262";
 const VIBER_NUMBER = "%2B9647732640262";
-const TELEGRAM_HANDLE = "hemin.sherko";
+const TELEGRAM_HANDLE = "heminsherko";
 
 const WHATSAPP_URL = `https://wa.me/9647732640262?text=${encodeURIComponent("سڵاو، پێویستم بە یارمەتییە لە توێژینەوەی زانستی")}`;
 const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
