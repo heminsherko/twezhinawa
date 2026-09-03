@@ -1,62 +1,78 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import LevelSelectionModal from "./LevelSelectionModal";
+import AssistanceModal from "./AssistanceModal";
 
 export default function Navbar() {
-  const [isDark, setIsDark] = useState(false);
-  const [showLevelModal, setShowLevelModal] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLevelModal, setShowLevelModal] = useState(false);
+  const [showAssistanceModal, setShowAssistanceModal] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    // Check initial dark mode state
+    // Check initial theme from document class
     if (document.documentElement.classList.contains("dark")) {
-      setIsDark(true);
+      setTheme("dark");
     }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove("dark");
-      setIsDark(false);
-    } else {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    
+    if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
-      setIsDark(true);
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   };
 
   return (
     <>
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-100 dark:border-slate-800 transition-colors duration-300">
-        <div className="container max-w-7xl mx-auto px-4 sm:px-5 py-3 md:py-4 flex items-center justify-between">
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
+          isScrolled 
+            ? "bg-white/90 dark:bg-[#020617]/90 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800 py-3 md:py-4" 
+            : "bg-transparent py-4 md:py-6"
+        }`}
+      >
+        <div className="container max-w-7xl mx-auto px-4 sm:px-5 flex items-center justify-between">
           
-          {/* Logo (Right in RTL) */}
-          <Link href="/">
+          {/* Logo Section */}
+          <Link href="/" className="relative z-10" onClick={() => setIsMobileMenuOpen(false)}>
             <Logo />
           </Link>
-
-          {/* Desktop Navigation Links (Center) */}
+          
+          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-10">
-            <button onClick={() => setShowLevelModal(true)} className="relative group text-base leading-relaxed text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors font-medium">
+            <button onClick={() => setShowLevelModal(true)} className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               چۆن توێژینەوەکەم دروست بکەم؟
-              <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#00A8CC] transition-all duration-300 group-hover:w-full"></span>
             </button>
-            <Link href="/#source-finder" className="relative group text-base leading-relaxed text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors font-medium">
+            <Link href="/#source-finder" className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               دۆزینەوەی سەرچاوەی زانستی
-              <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#00A8CC] transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="/journals" className="relative group text-base leading-relaxed text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors font-medium">
+            <Link href="/journals" className="text-base font-semibold text-[#0A2540] dark:text-white hover:text-[#00A8CC] dark:hover:text-[#00A8CC] transition-colors">
               گۆڤارە نێودەوڵەتییەکان
-              <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-[#00A8CC] transition-all duration-300 group-hover:w-full"></span>
             </Link>
           </nav>
 
-          {/* Action Buttons & Mobile Controls (Left in RTL) */}
-          <div className="flex items-center gap-2 md:gap-4">
+          {/* Action Buttons & Mobile Toggle */}
+          <div className="flex items-center gap-4 z-10">
             <button 
               onClick={toggleTheme}
               className="w-10 h-10 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
@@ -77,9 +93,9 @@ export default function Navbar() {
             
             <div className="hidden md:block">
               <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}>
-                <Link href="/consultation" className="px-6 py-2.5 md:px-8 md:py-3 text-base md:text-lg font-medium bg-[#00A8CC] hover:bg-[#008ba8] text-white rounded-xl transition-all flex items-center justify-center">
+                <button onClick={() => setShowAssistanceModal(true)} className="px-6 py-2.5 md:px-8 md:py-3 text-base md:text-lg font-medium bg-[#00A8CC] hover:bg-[#008ba8] text-white rounded-xl transition-all flex items-center justify-center">
                   پێویستت بە یارمەتییە؟
-                </Link>
+                </button>
               </motion.div>
             </div>
 
@@ -124,13 +140,12 @@ export default function Navbar() {
                 >
                   گۆڤارە نێودەوڵەتییەکان
                 </Link>
-                <Link 
-                  href="/consultation" 
-                  onClick={() => setIsMobileMenuOpen(false)}
+                <button 
+                  onClick={() => { setIsMobileMenuOpen(false); setShowAssistanceModal(true); }}
                   className="w-full mt-4 px-6 py-4 text-center text-lg font-medium bg-[#00A8CC] text-white rounded-xl"
                 >
                   پێویستت بە یارمەتییە؟
-                </Link>
+                </button>
               </div>
             </motion.div>
           )}
@@ -140,6 +155,10 @@ export default function Navbar() {
       <LevelSelectionModal 
         isOpen={showLevelModal} 
         onClose={() => setShowLevelModal(false)} 
+      />
+      <AssistanceModal 
+        isOpen={showAssistanceModal} 
+        onClose={() => setShowAssistanceModal(false)} 
       />
     </>
   );

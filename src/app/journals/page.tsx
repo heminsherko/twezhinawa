@@ -1,9 +1,23 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Globe, Award, AlertTriangle, BookOpen, ExternalLink } from "lucide-react";
+import { Globe, Award, AlertTriangle, BookOpen, ExternalLink, Library } from "lucide-react";
+import ArticleModal from "../../components/ArticleModal";
 
 export default function JournalsPage() {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<any | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin_articles");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const filtered = parsed.filter((a: any) => a.category === "گۆڤارە نێودەوڵەتییەکان" && a.status === "published");
+      setArticles(filtered);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen pt-10 pb-20 px-4">
       <div className="max-w-6xl mx-auto space-y-16">
@@ -38,50 +52,74 @@ export default function JournalsPage() {
             ١. داتابەیسە باوەڕپێکراوەکان
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Scopus */}
-            <a href="https://www.scopus.com/sources.uri" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
-              <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
-                <Globe className="w-8 h-8" />
-              </div>
-              <div>
-                <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
-                  Scopus <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
-                  گەورەترین داتابەیسی توێژینەوە و گۆڤارە زانستییەکان لە جیهاندا.
-                </p>
-              </div>
-            </a>
+            {articles.length > 0 ? (
+              articles.map(article => (
+                <button 
+                  key={article.id}
+                  onClick={() => setSelectedArticle(article)}
+                  className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4 text-right"
+                >
+                  <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
+                    <BookOpen className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
+                      {article.title}
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
+                      {article.summary}
+                    </p>
+                  </div>
+                </button>
+              ))
+            ) : (
+              <>
+                {/* Scopus */}
+                <a href="https://www.scopus.com/sources.uri" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
+                  <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
+                    <Globe className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
+                      Scopus <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
+                      گەورەترین داتابەیسی توێژینەوە و گۆڤارە زانستییەکان لە جیهاندا.
+                    </p>
+                  </div>
+                </a>
 
-            {/* Clarivate */}
-            <a href="https://mjl.clarivate.com/home" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
-              <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
-                <Award className="w-8 h-8" />
-              </div>
-              <div>
-                <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
-                  Web of Science <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
-                  مەرجەعی فەرمی بۆ زانینی Impact Factor و ئاستی گۆڤارەکان.
-                </p>
-              </div>
-            </a>
+                {/* Clarivate */}
+                <a href="https://mjl.clarivate.com/home" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
+                  <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
+                    <Award className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
+                      Web of Science <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
+                      مەرجەعی فەرمی بۆ زانینی Impact Factor و ئاستی گۆڤارەکان.
+                    </p>
+                  </div>
+                </a>
 
-            {/* DOAJ */}
-            <a href="https://doaj.org/" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
-              <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
-                <BookOpen className="w-8 h-8" />
-              </div>
-              <div>
-                <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
-                  DOAJ <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
-                  لیستی گۆڤارە باوەڕپێکراوەکانی کراوە (Open Access).
-                </p>
-              </div>
-            </a>
+                {/* DOAJ */}
+                <a href="https://doaj.org/" target="_blank" rel="noreferrer" className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4">
+                  <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
+                    <Library className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
+                      DOAJ <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
+                      لیستی گۆڤارە باوەڕپێکراوەکانی کراوە (Open Access).
+                    </p>
+                  </div>
+                </a>
+              </>
+            )}
           </div>
         </motion.section>
 
@@ -149,6 +187,12 @@ export default function JournalsPage() {
         </motion.section>
 
       </div>
+      
+      <ArticleModal 
+        article={selectedArticle} 
+        isOpen={!!selectedArticle} 
+        onClose={() => setSelectedArticle(null)} 
+      />
     </div>
   );
 }

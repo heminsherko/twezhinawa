@@ -1,9 +1,23 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, BookOpen, ExternalLink, Globe, Library } from "lucide-react";
+import ArticleModal from "./ArticleModal";
 
 export default function SourceFinder() {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<any | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin_articles");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const filtered = parsed.filter((a: any) => a.category === "سەرچاوەکان" && a.status === "published");
+      setArticles(filtered);
+    }
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -47,74 +61,105 @@ export default function SourceFinder() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* Card 1: Kurdish */}
-          <motion.a 
-            href="https://www.hewalname.com/ku/" 
-            target="_blank" 
-            rel="noreferrer"
-            variants={itemVariants}
-            className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
-          >
-            <div className="absolute top-5 right-5 md:top-6 md:right-6">
-              <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
-            </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-green-500/10 flex items-center justify-center mb-4 md:mb-6">
-              <BookOpen className="w-6 h-6 md:w-7 md:h-7 text-green-500" />
-            </div>
-            <h3 className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3">
-              سەرچاوەی کوردی
-            </h3>
-            <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-              وێبسایتی (هەواڵنامە)؛ باشترین سەکۆ بۆ دۆزینەوەی پەرتووک و توێژینەوەی ئەکادیمی بە زمانی کوردی.
-            </p>
-          </motion.a>
+          {articles.length > 0 ? (
+            articles.map(article => (
+              <motion.button 
+                key={article.id}
+                onClick={() => setSelectedArticle(article)}
+                variants={itemVariants}
+                className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300 text-right"
+              >
+                <div className="absolute top-5 right-5 md:top-6 md:right-6">
+                  <BookOpen className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
+                </div>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[#00A8CC]/10 flex items-center justify-center mb-4 md:mb-6">
+                  <Library className="w-6 h-6 md:w-7 md:h-7 text-[#00A8CC]" />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3">
+                  {article.title}
+                </h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
+                  {article.summary}
+                </p>
+              </motion.button>
+            ))
+          ) : (
+            <>
+              {/* Card 1: Kurdish */}
+              <motion.a 
+                href="https://www.hewalname.com/ku/" 
+                target="_blank" 
+                rel="noreferrer"
+                variants={itemVariants}
+                className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
+              >
+                <div className="absolute top-5 right-5 md:top-6 md:right-6">
+                  <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
+                </div>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-green-500/10 flex items-center justify-center mb-4 md:mb-6">
+                  <BookOpen className="w-6 h-6 md:w-7 md:h-7 text-green-500" />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3">
+                  سەرچاوەی کوردی
+                </h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
+                  وێبسایتی (هەواڵنامە)؛ باشترین سەکۆ بۆ دۆزینەوەی پەرتووک و توێژینەوەی ئەکادیمی بە زمانی کوردی.
+                </p>
+              </motion.a>
 
-          {/* Card 2: Arabic */}
-          <motion.a 
-            href="https://www.iasj.net/" 
-            target="_blank" 
-            rel="noreferrer"
-            variants={itemVariants}
-            className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
-          >
-            <div className="absolute top-5 right-5 md:top-6 md:right-6">
-              <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
-            </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4 md:mb-6">
-              <Library className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
-            </div>
-            <h3 className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3">
-              المصادر العربية
-            </h3>
-            <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-              داتابەیسی (IASJ)؛ گەورەترین مەرجەعی توێژینەوە عەرەبییەکان سەدا سەد بە بێبەرامبەر (Open Access).
-            </p>
-          </motion.a>
+              {/* Card 2: Arabic */}
+              <motion.a 
+                href="https://www.iasj.net/" 
+                target="_blank" 
+                rel="noreferrer"
+                variants={itemVariants}
+                className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
+              >
+                <div className="absolute top-5 right-5 md:top-6 md:right-6">
+                  <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
+                </div>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4 md:mb-6">
+                  <Library className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3">
+                  المصادر العربية
+                </h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
+                  داتابەیسی (IASJ)؛ گەورەترین مەرجەعی توێژینەوە عەرەبییەکان سەدا سەد بە بێبەرامبەر (Open Access).
+                </p>
+              </motion.a>
 
-          {/* Card 3: English */}
-          <motion.a 
-            href="https://core.ac.uk/" 
-            target="_blank" 
-            rel="noreferrer"
-            variants={itemVariants}
-            className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
-          >
-            <div className="absolute top-5 right-5 md:top-6 md:right-6">
-              <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
-            </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-purple-500/10 flex items-center justify-center mb-4 md:mb-6">
-              <Globe className="w-6 h-6 md:w-7 md:h-7 text-purple-500" />
-            </div>
-            <h3 dir="ltr" className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3 text-right">
-              English Sources
-            </h3>
-            <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-              داتابەیسی (CORE)؛ گەورەترین پێگەی جیهانی بە زیاتر لە ٢٠٠ ملیۆن توێژینەوە و پەرتووکی ئینگلیزی بێبەرامبەر.
-            </p>
-          </motion.a>
-          
+              {/* Card 3: English */}
+              <motion.a 
+                href="https://core.ac.uk/" 
+                target="_blank" 
+                rel="noreferrer"
+                variants={itemVariants}
+                className="group relative flex flex-col p-5 md:p-6 bg-[#F4F7F6] dark:bg-[#020617] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl hover:-translate-y-2 hover:border-[#00A8CC] hover:shadow-lg transition-all duration-300"
+              >
+                <div className="absolute top-5 right-5 md:top-6 md:right-6">
+                  <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-slate-400 group-hover:text-[#00A8CC] transition-colors duration-300" />
+                </div>
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-purple-500/10 flex items-center justify-center mb-4 md:mb-6">
+                  <Globe className="w-6 h-6 md:w-7 md:h-7 text-purple-500" />
+                </div>
+                <h3 dir="ltr" className="text-lg md:text-xl font-bold text-[#0A2540] dark:text-white mb-2 md:mb-3 text-right">
+                  English Sources
+                </h3>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
+                  داتابەیسی (CORE)؛ گەورەترین پێگەی جیهانی بە زیاتر لە ٢٠٠ ملیۆن توێژینەوە و پەرتووکی ئینگلیزی بێبەرامبەر.
+                </p>
+              </motion.a>
+            </>
+          )}
         </motion.div>
       </div>
+
+      <ArticleModal 
+        article={selectedArticle} 
+        isOpen={!!selectedArticle} 
+        onClose={() => setSelectedArticle(null)} 
+      />
     </div>
   );
 }

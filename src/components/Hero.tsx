@@ -4,9 +4,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import LevelSelectionModal from "./LevelSelectionModal";
+import AssistanceModal from "./AssistanceModal";
 
 export default function Hero() {
   const [showLevelModal, setShowLevelModal] = useState(false);
+  const [showAssistanceModal, setShowAssistanceModal] = useState(false);
 
   return (
     <>
@@ -54,12 +56,12 @@ export default function Hero() {
               خۆم بە تەنیا دەست پێ دەکەم
             </button>
             
-            <Link
-              href="/consultation"
+            <button
+              onClick={() => setShowAssistanceModal(true)}
               className="w-full sm:w-auto min-h-[50px] px-6 py-4 md:px-8 bg-white dark:bg-[#1E293B] text-[#0A2540] dark:text-white border border-[#E2E8F0] dark:border-slate-700 hover:border-[#00A8CC] dark:hover:border-[#00A8CC] rounded-2xl md:rounded-xl text-base md:text-lg font-bold transition-all hover:-translate-y-1 flex items-center justify-center"
             >
               دەمەوێت ئێوە هاوکاریم بکەن
-            </Link>
+            </button>
           </motion.div>
         </div>
       </section>
@@ -67,6 +69,10 @@ export default function Hero() {
       <LevelSelectionModal 
         isOpen={showLevelModal} 
         onClose={() => setShowLevelModal(false)} 
+      />
+      <AssistanceModal 
+        isOpen={showAssistanceModal} 
+        onClose={() => setShowAssistanceModal(false)} 
       />
     </>
   );

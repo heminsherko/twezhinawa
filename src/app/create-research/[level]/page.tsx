@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Send, PhoneCall, ChevronRight, CheckCircle2, Award, Book, GraduationCap, Library } from "lucide-react";
+import { MessageCircle, Send, PhoneCall, ChevronRight, CheckCircle2, Award, Book, GraduationCap, Library as LibraryIcon, BookOpen } from "lucide-react";
+import ArticleModal from "../../../components/ArticleModal";
 
 // لیستی تەواوەتی کۆلێژ و بەشەکانی زانکۆکانی هەرێمی کوردستان
 const universityData: Record<string, string[]> = {
@@ -69,6 +70,17 @@ export default function ResearchWizard() {
   const [college, setCollege] = useState("");
   const [department, setDepartment] = useState("");
   const [title, setTitle] = useState("");
+  const [articles, setArticles] = useState<any[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<any | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin_articles");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const filtered = parsed.filter((a: any) => a.category === "ڕێبەری توێژینەوە" && a.status === "published");
+      setArticles(filtered);
+    }
+  }, []);
 
   const guidelines = getGuidelinesByCollege(college);
 
@@ -240,11 +252,46 @@ export default function ResearchWizard() {
                 </div>
               </div>
 
+              {/* Dynamic Articles Section */}
+              {articles.length > 0 && (
+                <div className="lg:col-span-3 mt-8">
+                  <h2 className="text-2xl text-[#0A2540] dark:text-white mb-6 border-b border-[#E2E8F0] dark:border-slate-700 pb-4" style={{ WebkitTextStroke: '0.6px currentColor' }}>
+                    بابەتە پەیوەندیدارەکان
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {articles.map(article => (
+                      <button 
+                        key={article.id}
+                        onClick={() => setSelectedArticle(article)}
+                        className="bg-white dark:bg-[#1E293B] border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-6 hover:-translate-y-2 hover:border-[#00A8CC] transition-all group shadow-sm flex flex-col items-start gap-4 text-right"
+                      >
+                        <div className="bg-[#00A8CC]/10 p-4 rounded-xl text-[#00A8CC]">
+                          <BookOpen className="w-8 h-8" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl text-[#0A2540] dark:text-white flex items-center gap-2" style={{ WebkitTextStroke: '0.4px currentColor' }}>
+                            {article.title}
+                          </h3>
+                          <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm leading-relaxed">
+                            {article.summary}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </motion.div>
           )}
           
         </AnimatePresence>
       </div>
+
+      <ArticleModal 
+        article={selectedArticle} 
+        isOpen={!!selectedArticle} 
+        onClose={() => setSelectedArticle(null)} 
+      />
     </div>
   );
 }
