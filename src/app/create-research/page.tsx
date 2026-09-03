@@ -243,7 +243,7 @@ function WizardContent() {
                     <span className="text-lg text-[#0A2540] dark:text-white">واتسئاپ</span>
                   </a>
                   {/* Telegram */}
-                  <a href="https://t.me/+9647732640262" target="_blank" rel="noreferrer" className="bg-white/60 dark:bg-[#1E293B]/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 p-6 rounded-2xl flex flex-col items-center gap-3 hover:-translate-y-2 hover:border-[#0088cc] hover:shadow-[0_10px_20px_-10px_rgba(0,136,204,0.4)] transition-all shadow-sm">
+                  <a href="https://t.me/hemin.sherko" target="_blank" rel="noreferrer" className="bg-white/60 dark:bg-[#1E293B]/60 backdrop-blur-md border border-slate-200 dark:border-slate-700 p-6 rounded-2xl flex flex-col items-center gap-3 hover:-translate-y-2 hover:border-[#0088cc] hover:shadow-[0_10px_20px_-10px_rgba(0,136,204,0.4)] transition-all shadow-sm">
                     <Send className="w-10 h-10 text-[#0088cc]" />
                     <span className="text-lg text-[#0A2540] dark:text-white">تێلگرام</span>
                   </a>

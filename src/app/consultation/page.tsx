@@ -15,7 +15,7 @@ const contactMethods = [
   {
     id: "telegram",
     title: "تێلگرام (Telegram)",
-    url: "https://t.me/+9647732640262",
+    url: "https://t.me/hemin.sherko",
     color: "#0088cc",
     hoverShadow: "hover:shadow-[0_10px_30px_-10px_rgba(0,136,204,0.5)]",
     icon: Send
