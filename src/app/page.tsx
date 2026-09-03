@@ -6,7 +6,7 @@ import SourceFinder from "@/components/SourceFinder";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-10 md:gap-24 pb-12 md:pb-20 pt-2 md:pt-4 w-full overflow-hidden">
+    <div className="flex flex-col gap-10 md:gap-24 pt-8 pb-10 md:pt-16 md:pb-20 w-full overflow-hidden">
       
       {/* بەشی پێشوازی و ناساندن */}
       <Hero />

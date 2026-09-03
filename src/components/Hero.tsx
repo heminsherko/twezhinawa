@@ -12,19 +12,19 @@ export default function Hero() {
 
   return (
     <>
-      <section className="relative py-12 md:py-32 overflow-hidden flex flex-col items-center justify-center text-center px-4 sm:px-6">
+      <section className="relative pt-6 pb-12 md:pt-16 md:pb-32 overflow-hidden flex flex-col items-center justify-center text-center px-4 sm:px-6">
         
         {/* ڕووناکی شاراوەی پاشبنەما بە ڕەنگی فەرمیی براندەکەت (#00A8CC) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-[#00A8CC]/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
 
-        <div className="max-w-4xl mx-auto relative z-10 w-full">
+        <div className="max-w-4xl mx-auto relative z-10 w-full flex flex-col items-center">
           
           {/* تایتڵی سەرەکی بە ڕەنگی سروشتی (بێ زەردی) */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl mb-6 md:mb-8 font-extrabold text-[#0A2540] dark:text-white leading-tight md:leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-6 md:mb-8 font-extrabold text-[#0A2540] dark:text-white leading-[1.3] md:leading-[1.2]"
             style={{ WebkitTextStroke: '0.6px currentColor' }}
           >
             توێژینەوەی زانستی
@@ -35,11 +35,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-base sm:text-lg md:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed md:leading-relaxed mb-8 md:mb-10 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-2xl text-slate-700 dark:text-slate-300 leading-relaxed md:leading-relaxed mb-10 md:mb-12 max-w-3xl px-2"
           >
             ڕێنمایی و ڕاوێژکاری دروست بۆ توێژینەوەی زانستی کوالێتی بەرز، یارمەتیدان لە دۆزینەوەی سەرچاوەی زانستی، بڵاوکردنەوە لە گۆڤارە جیهانییەکان، و ڕاوێژ و ڕێنمایی ڕاستەوخۆ.
-            <br className="hidden md:block mt-3" />
-            بە کام ڕێگا دەتەوێت دەست پێ بکەیت؟
+            <span className="block mt-4 font-medium text-[#00A8CC]">بە کام ڕێگا دەتەوێت دەست پێ بکەیت؟</span>
           </motion.p>
 
           {/* دوگمەکان (دەستپێک و ڕاوێژکاری) */}

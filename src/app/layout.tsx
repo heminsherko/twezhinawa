@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import AIAssistant from '@/components/AIAssistant';
 import './globals.css';
 
 const rudaw = localFont({
@@ -43,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
-        <AIAssistant />
       </body>
     </html>
   );

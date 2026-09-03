@@ -9,7 +9,7 @@ export default function Logo() {
       whileHover="hover"
     >
       {/* لۆگۆکە بچووک کراوەتەوە بۆ قەبارەی ئاسایی (w-14 h-14 بۆ مۆبایل و w-16 h-16 بۆ کۆمپیوتەر) */}
-      <div className="relative w-14 h-14 md:w-16 md:h-16 flex-shrink-0">
+      <div className="relative w-9 h-9 md:w-12 md:h-12 flex-shrink-0">
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 150 150"
@@ -62,12 +62,12 @@ export default function Logo() {
       {/* نووسینی براندەکە (بچووک کراوەتەوە بۆ قەبارەی ئاسایی) */}
       <div className="flex flex-col justify-center">
         <span 
-          className="text-2xl font-bold leading-tight text-[#0A2540] dark:text-white transition-colors"
+          className="text-base md:text-xl font-bold leading-tight text-[#0A2540] dark:text-white transition-colors"
           style={{ WebkitTextStroke: '0.6px currentColor' }}
         >
           توێژینەوەی زانستی
         </span>
-        <span className="text-xs font-semibold text-[#00A8CC] mt-1">
+        <span className="text-[10px] md:text-xs font-semibold text-[#00A8CC] mt-0.5">
           سەرچاوەی باوەڕپێکراوی توێژەران
         </span>
       </div>

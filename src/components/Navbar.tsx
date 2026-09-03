@@ -49,11 +49,7 @@ export default function Navbar() {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
-          isScrolled 
-            ? "bg-white/90 dark:bg-[#020617]/90 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800 py-3 md:py-4" 
-            : "bg-transparent py-4 md:py-6"
-        }`}
+        className="sticky top-0 z-50 h-16 md:h-20 bg-white/90 dark:bg-[#020617]/90 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800 flex items-center"
       >
         <div className="container max-w-7xl mx-auto px-4 sm:px-5 flex items-center justify-between">
           
